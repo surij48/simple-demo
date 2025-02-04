@@ -1,0 +1,45 @@
+name: Azure CI-CD
+
+on: [push]
+
+env:
+  AZURE_WEBAPP_NAME: portfolio-surendra
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
+  NODE_VERSION: '18.x'
+
+jobs:
+  build-and-deploy:
+    runs-on: Ubuntu-latest
+    steps: 
+    - name: 'Checkout Github Action'
+      uses: actions/checkout@main
+
+    - uses: azure/login@v3
+      with:
+        creds: ${{ secrets.AZURE_SECRET_KEY }}
+
+    - name: Setup Node ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with: 
+        node-version:  ${{ env.NODE_VERSION }}
+
+    - name: 'npm install,build and test'
+      run: |
+       npm install
+       npm run build --if-present
+       npm run test --if-present
+      working-directory: .
+
+    - uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ./build
+
+
+    - name: Logout
+      run: |
+        az logout
+      
+      
+       
+     
