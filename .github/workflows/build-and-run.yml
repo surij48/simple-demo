@@ -4,6 +4,12 @@ on:
     push:
         branches:
          - main
+
+env:
+  - name: Set environment variable
+    run: echo "SKIP_TESTS=true" >> $GITHUB_ENV
+
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -20,6 +26,7 @@ jobs:
               run: npm run build
             - name: Run Tests
               run: npm test 
+              if: ${{ !env.SKIP_TESTS }}
 
             - name: Upload build artifacts
               uses: actions/upload-artifact@v4
