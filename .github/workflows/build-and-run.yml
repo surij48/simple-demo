@@ -3,7 +3,7 @@ name: buildAndDeployApp
 on: 
     push:
         branches:
-         - simple-demo
+         - main
 jobs:
     build:
         runs-on: ubuntu-latest
