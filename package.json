@@ -1,6 +1,6 @@
 {
   "name": "simple-demo",
-  "homepage": "https://surij48.github.io/simple-demo",
+  "homepage":"/simple-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
